@@ -9,6 +9,14 @@ public class AddressBook {
         contactPersons.add(person);
     }
 
+    static void deleteContact(String name){
+        for (int i = 0; i < contactPersons.size(); i++){
+            if(contactPersons.get(i).firstName == name){
+                contactPersons.remove(i);
+            }
+        }
+    }
+
     static void editContactPerson(String name, ContactPerson person){
         for (int i = 0; i < contactPersons.size(); i++){
             if(contactPersons.get(i).firstName == name){
@@ -64,6 +72,11 @@ public class AddressBook {
 
         editContactPerson("keerthana", ganesh);
 
+
+
+        showContacts();
+
+        deleteContact("Ganesh");
         showContacts();
     }
 }
