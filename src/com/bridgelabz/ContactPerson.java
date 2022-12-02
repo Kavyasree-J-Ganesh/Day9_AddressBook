@@ -4,7 +4,7 @@ public class ContactPerson {
     ContactPerson(
             String firstName,
             String lastName,
-            String addess,
+            String address,
             String city,
             String state,
             String zip,
@@ -13,7 +13,7 @@ public class ContactPerson {
     ){
         this.firstName = firstName;
         this.lastName = lastName;
-        this.address = addess;
+        this.address = address;
         this.city = city;
         this.state = state;
         this.zip = zip;
