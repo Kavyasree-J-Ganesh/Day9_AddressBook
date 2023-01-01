@@ -19,7 +19,8 @@ public class AddressBookMain {
         do {
             System.out.println(
                     "1. ADD Addressbook \n2. Perform Operations into AddressBook \n3 Display all address book \n " +
-                            "4 Get contacts by city or state" +
+                            "4 Get contacts by city \n" +
+                            "5 Get contacts by state \n"
                             "\n 5 Exit");
             System.out.println("Enter the Operation Number");
             opration = scanner.nextInt();
@@ -48,27 +49,40 @@ public class AddressBookMain {
                     break;
 
                 case 4:
-                    System.out.println("Enter the city or state");
+                    System.out.println("Enter the city");
                     String city = scanner.nextLine();
                     ArrayList<ContactPerson> contactsByCity = new ArrayList<>();
                     for(Map.Entry<String,AddressBook> set : addressBookMap.entrySet()){
                         ArrayList<ContactPerson> contacts = set.getValue().contactList;
                         ArrayList<ContactPerson> contactsByCityFilter =
                                 new ArrayList<>(contacts.stream().filter(
-                                        el->el.getCity().equals(city) || el.getState().equals( city)).toList()
+                                        el->el.getCity().equals(city)).toList()
                                 );
                         contactsByCity.addAll(contactsByCityFilter);
                     }
                     System.out.println(contactsByCity);
                     break;
-
                 case 5:
+                    System.out.println("Enter the state");
+                    String state = scanner.nextLine();
+                    ArrayList<ContactPerson> contactsByState = new ArrayList<>();
+                    for(Map.Entry<String,AddressBook> set : addressBookMap.entrySet()){
+                        ArrayList<ContactPerson> contacts = set.getValue().contactList;
+                        ArrayList<ContactPerson> contactsByCityFilter =
+                                new ArrayList<>(contacts.stream().filter(
+                                        el->el.getCity().equals(state)).toList()
+                                );
+                        contactsByState.addAll(contactsByCityFilter);
+                    }
+                    System.out.println(contactsByState);
+                    break;
+                case 6:
                     System.out.println("Exiting");
                     break;
                 default:
                     System.out.println("Enter The Wrong Opration Number");
             }
-        } while (opration != 5);
+        } while (opration != 6);
 
         System.out.println();
 
