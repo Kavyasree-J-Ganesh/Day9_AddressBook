@@ -13,6 +13,12 @@ public class AddressBook {
         System.out.println("Enter the details of contact person");
         System.out.print("Enter first name:");
         contactPerson.setName(sc.next());
+
+        boolean userPresent = contactList.stream().anyMatch(el-> el.getName().equals(contactPerson.getName()));
+        if(userPresent){
+           System.out.println("Contact already present");
+           return;
+        }
         System.out.print("Enter Last name:");
         contactPerson.setLastName(sc.next());
         System.out.println("Enter the Address : ");
