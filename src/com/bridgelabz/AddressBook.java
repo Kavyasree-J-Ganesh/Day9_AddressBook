@@ -147,11 +147,13 @@ public class AddressBook {
                     System.out.println("Enter the  city");
                     String city = scanner.next();
                     System.out.println(contactsByCity.get(city));
+                    System.out.println("Number of contacts with city = " + city + " " + contactsByCity.get(city).size());
                     break;
                 case 6:
                     System.out.println("Enter the  state");
                     String state = scanner.next();
                     System.out.println(contactsByState.get(state));
+                    System.out.println("Number of contacts with state = " + state + " " + contactsByState.get(state).size());
                     break;
                 case 7:
                     System.out.println("Exiting");
