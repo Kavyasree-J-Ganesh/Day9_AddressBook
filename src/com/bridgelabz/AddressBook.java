@@ -131,13 +131,29 @@ public class AddressBook {
         }
     }
 
+    public void sortByName(){
+        contactList.sort(Comparator.comparing(ContactPerson::getName));
+    }
+
+    public void sortByZip(){
+        contactList.sort(Comparator.comparing(ContactPerson::getZipCode));
+    }
+
+    public void sortByCity(){
+        contactList.sort(Comparator.comparing(ContactPerson::getCity));
+    }
+
+    public void sortByState(){
+        contactList.sort(Comparator.comparing(ContactPerson::getState));
+    }
+
     public void operation(){
         Scanner scanner = new Scanner(System.in);
         int opration;
         do {
             System.out.println(
                     "1. ADD CONTACT \n2. DISPLAY CONTACT \n3 EDIT \n4 Delete \n 5 Display by city " +
-                            "\n 6 Display by state \n 7 Sort by name \n8. EXIT ");
+                            "\n 6 Display by state \n 7 Sort by \n8. EXIT ");
             System.out.println("Enter the Operation Number");
             opration = scanner.nextInt();
             switch (opration) {
@@ -166,7 +182,25 @@ public class AddressBook {
                     System.out.println("Number of contacts with state = " + state + " " + contactsByState.get(state).size());
                     break;
                 case 7:
-                    contactList.sort(Comparator.comparing(ContactPerson::getName));
+                    System.out.println("1. Name");
+                    System.out.println("2. City");
+                    System.out.println("3. State");
+                    System.out.println("4. Zip");
+                    int opt = scanner.nextInt();
+                    switch (opt){
+                        case 1:
+                            this.sortByName();
+                            break;
+                        case 2:
+                            this.sortByCity();
+                            break;
+                        case 3:
+                            this.sortByState();
+                            break;
+                        case 4:
+                            this.sortByZip();
+                            break;
+                    }
                     System.out.println(this);
                     break;
                 case 8:
