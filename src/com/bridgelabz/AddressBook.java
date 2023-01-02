@@ -1,6 +1,7 @@
 package com.bridgelabz;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -123,11 +124,14 @@ public class AddressBook {
 
         }
     }
+
     public void operation(){
         Scanner scanner = new Scanner(System.in);
         int opration;
         do {
-            System.out.println("1. ADD CONTACT \n2. DISPLAY CONTACT \n3 EDIT \n4 Delete \n 5 Display by city \n 6 Display by state \n7. EXIT ");
+            System.out.println(
+                    "1. ADD CONTACT \n2. DISPLAY CONTACT \n3 EDIT \n4 Delete \n 5 Display by city " +
+                            "\n 6 Display by state \n 7 Sort by name \n8. EXIT ");
             System.out.println("Enter the Operation Number");
             opration = scanner.nextInt();
             switch (opration) {
@@ -156,12 +160,16 @@ public class AddressBook {
                     System.out.println("Number of contacts with state = " + state + " " + contactsByState.get(state).size());
                     break;
                 case 7:
+                    contactList.sort(Comparator.comparing(ContactPerson::getName));
+                    System.out.println(this);
+                    break;
+                case 8:
                     System.out.println("Exiting");
                     break;
                 default:
                     System.out.println("Enter The Wrong Opration Number");
             }
-        } while (opration != 7);
+        } while (opration != 8);
     }
 
 }
