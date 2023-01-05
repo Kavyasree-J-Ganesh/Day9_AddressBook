@@ -12,6 +12,7 @@ public class ContactPerson {
     public ContactPerson() {
     }
 
+
     public ContactPerson(String name, String lastName, String address, String city, String state, String phoneNo, String zipCode) {
         this.name = name;
         this.lastName = lastName;

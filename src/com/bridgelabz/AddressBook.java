@@ -16,7 +16,7 @@ public class AddressBook {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter the details of contact person");
         System.out.print("Enter first name:");
-        contactPerson.setName(sc.next());
+        contactPerson.setName(sc.next());          // used to read and set the contact person firstname
         System.out.print("Enter Last name:");
         contactPerson.setLastName(sc.next());
         System.out.println("Enter the Address : ");
@@ -29,22 +29,29 @@ public class AddressBook {
         contactPerson.setZipCode(sc.next());
         System.out.println("Enter the Mobile no : ");
         contactPerson.setPhoneNo(sc.next());
-        contactList.add(contactPerson);
+        contactList.add(contactPerson);             // contactList is the instance of arraylist and here we will add contact person into contactlist
 
-        if(contactsByCity.containsKey(contactPerson.getCity())){
-            ArrayList<ContactPerson> contacts = contactsByCity.get(contactPerson.getCity());
+
+        // here this "if" is used to add the person to corresponding city in the contactsByCity map
+        if(contactsByCity.containsKey(contactPerson.getCity())){          // here we use containskey to check  contacts are already there for the contact persons c city
+            ArrayList<ContactPerson> contacts = contactsByCity.get(contactPerson.getCity());    // get the list of contacts by city
             contacts.add(contactPerson);
             contactsByCity.put(contactPerson.getCity(), contacts);
         } else{
-            contactsByCity.put(contactPerson.getCity(), new ArrayList<>(contactList));
+            ArrayList<ContactPerson> list = new ArrayList<>(); // create an empty array list for adding first contact
+            list.add(contactPerson);
+            contactsByCity.put(contactPerson.getCity(), list);
         }
 
+        // here this "if" is used to add the person to corresponding state in the contactsByState map
         if(contactsByState.containsKey(contactPerson.getState())){
             ArrayList<ContactPerson> contacts = contactsByState.get(contactPerson.getState());
             contacts.add(contactPerson);
             contactsByCity.put(contactPerson.getState(), contacts);
         } else{
-            contactsByState.put(contactPerson.getState(), new ArrayList<>(contactList));
+            ArrayList<ContactPerson> list = new ArrayList<>();
+            list.add(contactPerson);
+            contactsByState.put(contactPerson.getState(), new ArrayList<>(list));
         }
     }
 
@@ -60,7 +67,7 @@ public class AddressBook {
         System.out.print("Enter first name:");
         String name = sc.next();
         for (ContactPerson contactPerson : contactList) {
-            if (name.equals(contactPerson.getName())) {
+            if (name.equals(contactPerson.getName())) {     // here if the name that we read the name same as contact person then we can edit the contact person
                 String city = contactPerson.getCity();
                 String state = contactPerson.getState();
                 System.out.println("Set Details");
@@ -78,7 +85,17 @@ public class AddressBook {
                 contactPerson.setZipCode(sc.next());
                 System.out.println("Enter the Mobile no : ");
                 contactPerson.setPhoneNo(sc.next());
-                if(contactsByState.containsKey(state)){
+
+                if(contactsByCity.containsKey(city)){     // here this is used to edit person in the contactByCity map also
+                    for (int i=0; i<contactsByCity.get(city).size();i++){
+                        if(name.equals(contactsByCity.get(city).get(i).getName())){
+                            contactsByCity.get(city).remove(i);
+                            contactsByCity.get(city).add(contactPerson);
+                        }
+                    }
+                }
+
+                if(contactsByState.containsKey(state)){   // here this is used to edit person in the contactByState map also
                     for (int i=0; i<contactsByState.get(state).size();i++){
                         if(name.equals(contactsByState.get(state).get(i).getName())){
                             contactsByState.get(state).remove(i);
@@ -87,14 +104,7 @@ public class AddressBook {
                     }
                 }
 
-                if(contactsByCity.containsKey(city)){
-                    for (int i=0; i<contactsByCity.get(city).size();i++){
-                        if(name.equals(contactsByCity.get(city).get(i).getName())){
-                            contactsByCity.get(city).remove(i);
-                            contactsByCity.get(city).add(contactPerson);
-                        }
-                    }
-                }
+
                 break;
             }
         }
@@ -108,13 +118,13 @@ public class AddressBook {
         String name = sc.next();
         for (ContactPerson contactPerson : contactList) {
             if (name.equals(contactPerson.getName())) {
-                contactList.remove(contactPerson);
-                if(contactsByState.containsKey(contactPerson.getState())){
+                contactList.remove(contactPerson);       // to remove person from contact list
+                if(contactsByState.containsKey(contactPerson.getState())){      // to remove the person from  contactByState map
                     ArrayList<ContactPerson> contacts = contactsByState.get(contactPerson.getState());
                     contacts = new ArrayList<>(contacts.stream().filter(x-> x.getName() != contactPerson.getName()).toList());
                     contactsByState.put(contactPerson.getState(), contacts);
                 }
-                if(contactsByState.containsKey(contactPerson.getCity())){
+                if(contactsByCity.containsKey(contactPerson.getCity())){     //  // to remove person from contact list
                     ArrayList<ContactPerson> contacts = contactsByCity.get(contactPerson.getCity());
                     contacts = new ArrayList<>(contacts.stream().filter(x-> x.getName() != contactPerson.getName()).toList());
                     contactsByCity.put(contactPerson.getCity(), contacts);
@@ -126,22 +136,26 @@ public class AddressBook {
     }
 
     public void sortByName(){
-        contactList.sort(Comparator.comparing(ContactPerson::getName));
+        //contactList.sort((person1,person2)-> person1.getName().compareTo(person2.getName()));
+        contactList = new ArrayList<>(contactList.stream().sorted((person1,person2)-> person1.getName().compareTo(person2.getName())).toList());
     }
 
     public void sortByZip(){
-        contactList.sort(Comparator.comparing(ContactPerson::getZipCode));
+        //contactList.sort((person1,person2)-> person1.getZipCode().compareTo(person2.getZipCode()));
+        contactList = new ArrayList<>(contactList.stream().sorted((person1,person2)-> person1.getZipCode().compareTo(person2.getZipCode())).toList());
     }
 
     public void sortByCity(){
-        contactList.sort(Comparator.comparing(ContactPerson::getCity));
+        //contactList.sort((person1,person2)-> person1.getCity().compareTo(person2.getCity()));
+        contactList = new ArrayList<>(contactList.stream().sorted((person1,person2)-> person1.getCity().compareTo(person2.getCity())).toList());
     }
 
     public void sortByState(){
-        contactList.sort(Comparator.comparing(ContactPerson::getState));
+        //contactList.sort((person1,person2)-> person1.getState().compareTo(person2.getState()));
+        contactList = new ArrayList<>(contactList.stream().sorted((person1,person2)-> person1.getState().compareTo(person2.getState())).toList());
     }
 
-    public void operation(){
+    public void  operation(){
         Scanner scanner = new Scanner(System.in);
         int opration;
         do {
@@ -166,7 +180,7 @@ public class AddressBook {
                 case 5:
                     System.out.println("Enter the  city");
                     String city = scanner.next();
-                    System.out.println(contactsByCity.get(city));
+                    System.out.println(contactsByCity.get(city));  // get method will give contact person list for the city
                     System.out.println("Number of contacts with city = " + city + " " + contactsByCity.get(city).size());
                     break;
                 case 6:
