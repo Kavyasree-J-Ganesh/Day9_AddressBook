@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.stream.Collector;
 
 public class AddressBook {
 
@@ -160,7 +161,7 @@ public class AddressBook {
                     System.out.println("Number of contacts with state = " + state + " " + contactsByState.get(state).size());
                     break;
                 case 7:
-                    contactList.sort(Comparator.comparing(ContactPerson::getName));
+                    contactList =  contactList = new ArrayList<>(contactList.stream().sorted((person1,person2)-> person1.getName().compareTo(person2.getName())).toList());
                     System.out.println(this);
                     break;
                 case 8:
